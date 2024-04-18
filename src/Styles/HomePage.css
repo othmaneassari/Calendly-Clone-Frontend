@@ -1,0 +1,127 @@
+h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 50px;
+  text-align: center;
+  color: #56647e;
+  margin-top: 3%;
+}
+
+p {
+  font-family: "Poppins", sans-serif;
+  color: #56647e;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+a {
+  color: #56647e;
+  display: flex;
+  align-items: center;
+  margin-left: 1%;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #f36f56;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+.button {
+  background-color: #6572e1;
+  padding: 10px;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.btn-primary {
+  padding: 25px 50px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 13px;
+  gap: 10px;
+  background-color: #6572e1;
+  color: white;
+  font-weight: 600;
+  max-height: 40px;
+
+  transition: 0.3 linear ease-in-out;
+}
+.btn-primary:hover {
+  background-color: #6d7bf4;
+}
+
+.btn-icon {
+  background-color: transparent;
+  padding: 10px 10px;
+  border-radius: 5px;
+  display: flex;
+}
+.btn-icon > img {
+  width: 20px;
+}
+
+.btn-google {
+  width: 182px;
+  height: 39px;
+  border-radius: 15px;
+
+  margin-top: 10px;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  font-size: 14px;
+  font-family: "poppins", sans-serif;
+}
+
+.loginbtn {
+  /* margin-left: 40%; */
+}
+
+.loginbtn .btn-primary {
+  width: 448px;
+  height: 53px;
+}
+
+.password {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.boxSection {
+  border: 1px solid red;
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  /* height: 500px; */
+  display: flex;
+  align-items: start;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  overflow: auto;
+  /* align-items: center; */
+}
+.box1 {
+  padding: 10px 20px;
+  margin-right: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: blueviolet;
+  color: white;
+}
+.box2 {
+  height: 100px;
+  width: 100px;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 5px;
+  background-color: rgb(37, 174, 110);
+  color: white;
+}
