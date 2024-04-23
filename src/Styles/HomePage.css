@@ -150,3 +150,93 @@ a:hover {
   background-color: rgb(37, 174, 110);
   color: white;
 }
+
+.fc-toolbar-title {
+  color: #56647e;
+  font-weight: 600;
+}
+
+.fc .fc-button-primary {
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.fc-icon.fc-icon-chevron-left {
+  color: #b3b9c5 !important;
+}
+
+.fc-icon.fc-icon-chevron-right {
+  color: #56647e !important;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border: none !important;
+}
+.fc-col-header-cell-cushion {
+  color: rgba(86, 100, 126, 0.45) !important;
+  font-weight: 700 !important;
+}
+.fc-theme-standard .fc-scrollgrid {
+  border: none !important;
+}
+.fc-theme-standard td,
+.fc-theme-standard th {
+  padding-block: 5px !important;
+}
+.fc .fc-daygrid-day-frame {
+  background-color: rgba(101, 114, 225, 0.04) !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 79px !important;
+  width: 90% !important;
+  cursor: pointer !important;
+}
+.fc-daygrid-day-top a {
+  color: #56647e !important;
+  font-size: 13px !important;
+}
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: transparent !important;
+  border-radius: 10px !important;
+}
+.fc .fc-daygrid-day.fc-day-today > div {
+  background-color: #6d7bf4 !important;
+  border-radius: 10px !important;
+}
+.fc .fc-daygrid-day.fc-day-today a {
+  color: white !important;
+}
+.fc .fc-daygrid-body {
+  width: 100% !important;
+}
+.fc .fc-scroller-liquid-absolute {
+  inset: unset !important;
+}
+.fc-daygrid-event-dot {
+  border-color: red !important;
+}
+.fc-event-time {
+  display: none !important;
+}
+.fc-daygrid-day-top {
+  position: absolute !important;
+
+  left: 50% !important;
+  transform: translate(-50%);
+  border-color: red !important;
+}
+.fc-daygrid-day-events {
+  position: absolute !important;
+  bottom: -5% !important;
+  left: 40%;
+}
+.fc-direction-ltr .fc-daygrid-event.fc-event-end,
+.fc-direction-rtl .fc-daygrid-event.fc-event-start {
+  height: 10px !important;
+  width: 10px !important;
+  border-radius: 100% !important;
+}

@@ -26,7 +26,7 @@ function Dashboard() {
 
       <Sidebar />
 
-      <div className="text-between h-[200vh] pt-[100px] ml-[6%] flex">
+      <div className="text-between pt-[100px] ml-[6%] flex">
         <Calendar />
         <Agenda />
       </div>
