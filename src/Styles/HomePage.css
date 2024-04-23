@@ -11,8 +11,16 @@ p {
   font-family: "Poppins", sans-serif;
   color: #56647e;
   text-align: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
+}
+
+.topbartitle {
+  font-family: "Audiowide", sans-serif;
+  font-size: 30px;
+}
+
+.topbar-btn {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
 }
 
 a {
@@ -58,8 +66,25 @@ a:hover {
   background-color: #6d7bf4;
 }
 
+.btn-secondary {
+  padding: 13px 40px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 13px;
+  gap: 5px;
+  background-color: #6572e1;
+  color: white;
+  font-weight: 600;
+  max-height: 40px;
+
+  transition: 0.3 linear ease-in-out;
+}
+.btn-secondary:hover {
+  background-color: #6d7bf4;
+}
+
 .btn-icon {
-  background-color: transparent;
   padding: 10px 10px;
   border-radius: 5px;
   display: flex;

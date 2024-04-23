@@ -41,7 +41,6 @@ function Register() {
                 >
                   Last Name
                 </label>
-                #hh
                 <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] mb-4">
                   <input
                     className="w-full"
