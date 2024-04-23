@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import plus from "../../assets/icon/plus.svg";
+import logo from "../../assets/icon/logo.png";
 
 export default function Guide() {
+  const [page, setPage] = useState("home");
   return (
     <section className="p-10">
       <div className="p-16 bg-black rounded-2xl ">
@@ -37,6 +39,15 @@ export default function Guide() {
           Go to Home
         </Link>
       </div>
+      <nav className="navbar">
+        <Link to="/" onClick={() => setPage("home")} className="logo">
+          <img src={logo} alt="logo" />
+        </Link>
+      </nav>
+
+      <button className="btn-calendar p-6 bg-[#F9F9FE] rounded-lg px-7 text-[#56647E]">
+        #
+      </button>
     </section>
   );
 }

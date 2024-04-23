@@ -31,6 +31,12 @@ function HeroSection() {
       >
         Go to Guide
       </Link>
+      <Link
+        className="button p-4 bg-blue-900 rounded-lg px-6 text-white"
+        to={`/Calendar`}
+      >
+        Go to Calendar
+      </Link>
       <div className="boxSection">
         <div className="box1">test1</div>
         <div className="box2">test2</div>
