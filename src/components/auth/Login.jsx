@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../Styles/HomePage.css";
 import google from "../../assets/icon/google.svg";
 import iconeuser from "../../assets/icon/iconeuser.svg";
 import lock from "../../assets/icon/lock.png";
 import Imageflex from "../../assets/icon/Imageflex.png";
+import LoginAPI from "./API Integration/LoginAPI";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div className="app">
       <div className="left-pane">
@@ -30,6 +34,7 @@ function Login() {
                   name=""
                   id=""
                   placeholder="Lorem Upsum..."
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <img src={iconeuser} alt="" />
               </div>
@@ -49,6 +54,7 @@ function Login() {
                   name=""
                   id=""
                   placeholder="•••••••••••"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <img src={lock} alt="" />
               </div>
