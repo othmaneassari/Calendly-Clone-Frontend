@@ -1,11 +1,81 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../Styles/HomePage.css";
 import iconeuser from "../../assets/icon/iconeuser.svg";
 import lock from "../../assets/icon/lock.png";
 import Imageflex from "../../assets/icon/Imageflex.png";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Register() {
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const registerfn = () => {
+    console.log(user, errors);
+    //logic and validation
+    const validateUser = (data) => {
+      const errors = {};
+      if (!data.firstName.trim()) {
+        errors.firstName = "First Name is required";
+      }
+      if (!data.lastName.trim()) {
+        errors.lastName = "Last Name is required";
+      }
+      if (!data.email.trim()) {
+        errors.email = "Email is required";
+      } else if (!isValidEmail(data.email)) {
+        errors.email = "Invalid Email Address";
+      }
+      if (!data.password) {
+        errors.password = "Password is required";
+      } else if (!isValidPassword(data.password)) {
+        errors.password = "Invalid Email Address";
+      }
+      if (data.password !== data.confirmPassword) {
+        errors.confirmPassword = "Password and Confirm Password do not match";
+      }
+      return errors;
+    };
+    if (Object.keys(validateUser).length === 0) {
+      console.log("Registered succesfully !", user);
+    } else {
+      setErrors(validateUser);
+    }
+
+    const isValidEmail = (email) => {
+      const re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    };
+
+    const isValidPassword = (password) => {
+      const nonAlphanumericRegex = /[^a-zA-Z0-9]/;
+      const digitRegex = /\d/;
+      const uppercaseRegex = /[A-Z]/;
+      return nonAlphanumericRegex.test(password);
+      return digitRegex.test(password);
+      return uppercaseRegex.test(password);
+    };
+
+    // send reqrest
+    //   axios
+    //     .post("https://localhost:7210/api/Authenticate/register", user)
+    //     .then((response) => console.log(response.data))
+    //     .catch((error) => console.error("Error fetching login:", error));
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://localhost:7210/WeatherForecast")
+  //     .then((response) => console.log(response.data))
+  //     .catch((error) => console.error("Error fetching login:", error));
+  // }, []);
+
   return (
     <div className="app">
       <div className="left-pane justify-center flex flex-col">
@@ -67,6 +137,9 @@ function Register() {
                     name=""
                     id=""
                     placeholder="Email"
+                    onChange={(event) =>
+                      setUser({ ...user, email: event.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -87,6 +160,9 @@ function Register() {
                     name=""
                     id=""
                     placeholder="Password"
+                    onChange={(event) =>
+                      setUser({ ...user, password: event.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -129,7 +205,10 @@ function Register() {
           </form>
           <div className="flex justify-center items-center flex-col max-w-[70%] m-auto">
             <div className="flex items-center flex-col justify-center w-full mx-auto">
-              <button className="btn-primary border p-4 flex items-center w-full max-sm:mr-0 mb-5 ">
+              <button
+                onClick={registerfn}
+                className="btn-primary border p-4 flex items-center w-full max-sm:mr-0 mb-5 "
+              >
                 Sign up
               </button>
             </div>
