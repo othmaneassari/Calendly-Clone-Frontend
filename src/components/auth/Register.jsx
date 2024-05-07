@@ -1,80 +1,142 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 import "../../Styles/HomePage.css";
-import iconeuser from "../../assets/icon/iconeuser.svg";
-import lock from "../../assets/icon/lock.png";
+
 import Imageflex from "../../assets/icon/Imageflex.png";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Register() {
+  const [isRegistered, setIsRegistered] = useState(false);
+
   const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const registerfn = () => {
-    console.log(user, errors);
-    //logic and validation
-    const validateUser = (data) => {
-      const errors = {};
-      if (!data.firstName.trim()) {
-        errors.firstName = "First Name is required";
-      }
-      if (!data.lastName.trim()) {
-        errors.lastName = "Last Name is required";
-      }
-      if (!data.email.trim()) {
-        errors.email = "Email is required";
-      } else if (!isValidEmail(data.email)) {
-        errors.email = "Invalid Email Address";
-      }
-      if (!data.password) {
-        errors.password = "Password is required";
-      } else if (!isValidPassword(data.password)) {
-        errors.password = "Invalid Email Address";
-      }
-      if (data.password !== data.confirmPassword) {
-        errors.confirmPassword = "Password and Confirm Password do not match";
-      }
-      return errors;
-    };
-    if (Object.keys(validateUser).length === 0) {
-      console.log("Registered succesfully !", user);
-    } else {
-      setErrors(validateUser);
-    }
+    // retrieve the form data and set the formdata state
+    console.log(formData);
 
+    // valaidate the form data
+    let isValid = true;
     const isValidEmail = (email) => {
-      const re = /\S+@\S+\.\S+/;
-      return re.test(email);
+      const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      re.test(email);
     };
-
     const isValidPassword = (password) => {
       const nonAlphanumericRegex = /[^a-zA-Z0-9]/;
       const digitRegex = /\d/;
       const uppercaseRegex = /[A-Z]/;
-      return nonAlphanumericRegex.test(password);
-      return digitRegex.test(password);
-      return uppercaseRegex.test(password);
+      nonAlphanumericRegex.test(password);
+      digitRegex.test(password);
+      uppercaseRegex.test(password);
     };
+    const validateUser = () => {
+      if (!formData.username) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          username: "First Name is required",
+        }));
+        isValid = false;
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          username: "",
+        }));
+      }
+      if (!formData.email) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Email is required",
+        }));
+        isValid = false;
+      } else if (isValidEmail(formData.email)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Invalid Email Address",
+        }));
+        isValid = false;
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "",
+        }));
+      }
 
-    // send reqrest
-    //   axios
-    //     .post("https://localhost:7210/api/Authenticate/register", user)
-    //     .then((response) => console.log(response.data))
-    //     .catch((error) => console.error("Error fetching login:", error));
+      if (!formData.password) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "Password is required",
+        }));
+        isValid = false;
+      } else if (isValidPassword(formData.password)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "Invalid Password",
+        }));
+        isValid = false;
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "",
+        }));
+      }
+      if (formData.password !== formData.confirmPassword) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          confirmPassword: "Password and Confirm Password do not match",
+        }));
+        isValid = false;
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          confirmPassword: "",
+        }));
+      }
+
+      if (isValid) {
+        setUser({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        });
+        axios
+          .post("https://localhost:7210/api/Authenticate/register", user)
+          .then((response) => setIsRegistered(true))
+          .catch((error) => console.error("Error fetching login:", error));
+        console.log("Registered successfully !");
+      } else {
+        console.log("Registration failed hhh");
+      }
+    };
+    validateUser();
+
+    // add the errors from form data
+    // add the errors from the response and set the errror json to it
+    // check if the formdata is valid and set the user to from data needed
+    // send the request
+
+    // check if the all the imput are valid and no error showed
+    // set the user state to the valid data from form data
+    // send the request to db with user state after verifing thats everthing work and valid
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://localhost:7210/WeatherForecast")
-  //     .then((response) => console.log(response.data))
-  //     .catch((error) => console.error("Error fetching login:", error));
-  // }, []);
+  if (isRegistered) {
+    return <Navigate to="/Login" />; // Use Navigate for redirection
+  }
 
   return (
     <div className="app">
@@ -87,7 +149,7 @@ function Register() {
           </p>
           <form className=" flex items-center flex-col justify-center max-w-[70%] mx-auto">
             <div className="firstlast flex justify-center w-full max-sm:flex-col mr-0 mb-0">
-              <div className="flex flex-col w-[285px]  my-2 mr-[27px] max-sm:mt-0 w-full pt-0">
+              <div className="flex flex-col   my-2 mr-[27px] max-sm:mt-0 w-full pt-0">
                 <label
                   htmlFor="first name"
                   className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-5"
@@ -101,10 +163,19 @@ function Register() {
                     name=""
                     id=""
                     placeholder="First Name"
+                    value={formData.username}
+                    onChange={(event) =>
+                      setFormData({ ...formData, username: event.target.value })
+                    }
                   />
                 </div>
+                {errors.username && (
+                  <span className="text-red-600 text-[11px] mt-3">
+                    {errors.username}
+                  </span>
+                )}
               </div>
-              <div className="flex flex-col w-[285px]  my-2 max-sm:mt-0 w-full">
+              <div className="flex flex-col  my-2 max-sm:mt-0 w-full">
                 <label
                   htmlFor="last name"
                   className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-5"
@@ -123,7 +194,7 @@ function Register() {
               </div>
             </div>
             <div className="firstlast flex justify-center w-full max-sm:flex-col mr-0">
-              <div className="flex flex-col w-full max-sm:mt-0 w-full">
+              <div className="flex flex-col  max-sm:mt-0 w-full">
                 <label
                   htmlFor="email"
                   className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-2"
@@ -137,16 +208,22 @@ function Register() {
                     name=""
                     id=""
                     placeholder="Email"
+                    value={formData.email}
                     onChange={(event) =>
-                      setUser({ ...user, email: event.target.value })
+                      setFormData({ ...formData, email: event.target.value })
                     }
                   />
                 </div>
+                {errors.email && (
+                  <span className="text-red-600 text-[11px] mt-3">
+                    {errors.email}
+                  </span>
+                )}
               </div>
             </div>
 
             <div className="password language flex justify-center w-full max-sm:flex-col mr-0">
-              <div className="flex flex-col w-[285px]  my-2 mr-[27px] max-sm:mt-0 w-full">
+              <div className="flex flex-col   my-2 mr-[27px] max-sm:mt-0 w-full">
                 <label
                   htmlFor="password"
                   className="text-[#56647E] text-sm font-medium mb-2 text-[13px]"
@@ -160,13 +237,19 @@ function Register() {
                     name=""
                     id=""
                     placeholder="Password"
+                    value={formData.password}
                     onChange={(event) =>
-                      setUser({ ...user, password: event.target.value })
+                      setFormData({ ...formData, password: event.target.value })
                     }
                   />
                 </div>
+                {errors.password && (
+                  <span className="text-red-600 text-[11px] mt-3">
+                    {errors.password}
+                  </span>
+                )}
               </div>
-              <div className="flex flex-col w-[285px]  my-2 max-sm:mt-0 w-full">
+              <div className="flex flex-col   my-2 max-sm:mt-0 w-full">
                 <label
                   htmlFor="confirm password"
                   className="text-[#56647E] text-sm font-medium mb-2 text-[13px]"
@@ -180,8 +263,20 @@ function Register() {
                     name=""
                     id=""
                     placeholder="Confirm password"
+                    // value={formData.confirmPassword || ""}
+                    onChange={(event) =>
+                      setFormData({
+                        ...formData,
+                        confirmPassword: event.target.value,
+                      })
+                    }
                   />
                 </div>
+                {errors.confirmPassword && (
+                  <span className="text-red-600 text-[11px] mt-3">
+                    {errors.confirmPassword}
+                  </span>
+                )}
               </div>
             </div>
             {/* 
