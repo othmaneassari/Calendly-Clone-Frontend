@@ -5,6 +5,7 @@ import "../../Styles/HomePage.css";
 import Imageflex from "../../assets/icon/Imageflex.png";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 function Register() {
   const [isRegistered, setIsRegistered] = useState(false);
@@ -33,10 +34,7 @@ function Register() {
 
     // valaidate the form data
     let isValid = true;
-    const isValidEmail = (email) => {
-      const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      re.test(email);
-    };
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const isValidPassword = (password) => {
       const nonAlphanumericRegex = /[^a-zA-Z0-9]/;
       const digitRegex = /\d/;
@@ -64,7 +62,7 @@ function Register() {
           email: "Email is required",
         }));
         isValid = false;
-      } else if (isValidEmail(formData.email)) {
+      } else if (!re.test(formData.email)) {
         setErrors((prevErrors) => ({
           ...prevErrors,
           email: "Invalid Email Address",
@@ -114,11 +112,15 @@ function Register() {
           email: formData.email,
           password: formData.password,
         });
-        axios
-          .post("https://localhost:7210/api/Authenticate/register", user)
-          .then((response) => setIsRegistered(true))
-          .catch((error) => console.error("Error fetching login:", error));
-        console.log("Registered successfully !");
+        if (user.email && user.username && user.password) {
+          axios
+            .post("https://localhost:7210/api/Authenticate/register", user)
+            .then((response) => {
+              setIsRegistered(true);
+            })
+            .catch((error) => toast.error(error.response.data.message));
+          console.log("Registered successfully !");
+        }
       } else {
         console.log("Registration failed hhh");
       }
@@ -140,6 +142,7 @@ function Register() {
 
   return (
     <div className="app">
+      <ToastContainer />
       <div className="left-pane justify-center flex flex-col">
         <div>
           <h1 className=" text-[31px]"> Create Account </h1>
@@ -207,6 +210,7 @@ function Register() {
                     type="email"
                     name=""
                     id=""
+                    required
                     placeholder="Email"
                     value={formData.email}
                     onChange={(event) =>
