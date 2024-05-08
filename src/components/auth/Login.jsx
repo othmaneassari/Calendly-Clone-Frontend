@@ -1,15 +1,78 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
+import axios from "axios";
 import "../../Styles/HomePage.css";
 import google from "../../assets/icon/google.svg";
 import iconeuser from "../../assets/icon/iconeuser.svg";
 import lock from "../../assets/icon/lock.png";
 import Imageflex from "../../assets/icon/Imageflex.png";
-import LoginAPI from "./API Integration/LoginAPI";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  console.log(user);
+  let isValid = true;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validateUser = () => {
+      if (!formData.email) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Email is required",
+        }));
+        isValid = false;
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "",
+        }));
+      }
+
+      if (!formData.password) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "Password is required",
+        }));
+        isValid = false;
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "",
+        }));
+      }
+    };
+    validateUser();
+
+    if (isValid) {
+      setUser({
+        email: formData.email,
+        password: formData.password,
+      });
+      axios
+        .post("https://localhost:7210/api/Authenticate/Login", user)
+        .then((response) => setLoggedIn(true))
+        .catch((error) => console.error("Error fetching register:", error));
+      console.log("Logged in successfully !");
+    } else {
+      console.log("Login failed hhh");
+    }
+    if (loggedIn) {
+      return <Navigate to="/Dashboard" />;
+    }
+  };
 
   return (
     <div className="app">
@@ -34,11 +97,19 @@ function Login() {
                   name=""
                   id=""
                   placeholder="Lorem Upsum..."
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                 />
                 <img src={iconeuser} alt="" />
               </div>
             </div>
+            {errors.email && (
+              <span className="text-red-600 text-[11px] mt-3">
+                {errors.email}
+              </span>
+            )}
 
             <div className="flex flex-col w-96 max-sm:w-80 ">
               <label
@@ -54,11 +125,19 @@ function Login() {
                   name=""
                   id=""
                   placeholder="•••••••••••"
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                 />
                 <img src={lock} alt="" />
               </div>
             </div>
+            {errors.password && (
+              <span className="text-red-600 text-[11px] mt-3">
+                {errors.password}
+              </span>
+            )}
           </form>
           <div className="password flex justify-center items-center  mb-8 mt-2 text-[13px]">
             <a className="link  text-center" href="link">
@@ -67,7 +146,10 @@ function Login() {
           </div>
           <div className="flex justify-center items-center flex-col">
             <div className="flex justify-center items-center">
-              <button className="btn-primary border p-4 flex items-center w-96 max-sm:w-80">
+              <button
+                className="btn-primary border p-4 flex items-center w-96 max-sm:w-80"
+                onClick={handleSubmit}
+              >
                 Login
               </button>
             </div>
