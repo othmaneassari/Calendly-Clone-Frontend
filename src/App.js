@@ -3,21 +3,18 @@ import Register from "./components/auth/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import HeroSection from "./components/HomePage/HeroSection";
 import { Route, Routes } from "react-router";
-import Form from "./Form";
 import Guide from "./components/Guide/Guide";
+import AuthProvider from "./components/auth/JWT Management/AuthProvider";
+import Test from "./components/auth/Routes/Test";
 
 function App() {
   return (
-    <main>
-      <Routes>
-        {/* <Route path="/" element=<Form /> /> */}
-        <Route path="/" element=<HeroSection /> />
-        <Route path="/Login" element=<Login /> />
-        <Route path="/Register" element=<Register /> />
-        <Route path="/Dashboard" element=<Dashboard /> />
-        <Route path="/Guide" element=<Guide /> />
-      </Routes>
-    </main>
+    <AuthProvider>
+      <main>
+        <Test />
+      </main>
+      ;
+    </AuthProvider>
   );
 }
 
