@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import bell from "../../assets/icon/bell.png";
 import JPM from "../../assets/icon/JPM.png";
 import gear from "../../assets/icon/gear.png";
 import "../../Styles/HomePage.css";
+import { useAuth } from "../auth/JWT Management/AuthProvider";
+import { jwtDecode } from "jwt-decode";
+import Login from "../auth/Login";
 
 function Topbar() {
   const [setPage] = useState("home");
+  const [name, setName] = useState("");
+  const token = localStorage.getItem("token");
+  const { username, email, id } = jwtDecode(token);
+  const decodedHeader = jwtDecode(token, { header: true });
+  console.log(username);
+
+  // useEffect(() => {
+  //   setName(jwtDecode(token).username);
+  // }, []);
+  // console.log(token.username);
   return (
     <div>
       <nav className="topbar bg-white flex flex-col fixed left-20 w-[100%] ml-[5px] pt-[15px] pb-[15px] pl-[15px] border-b-2 border-gray-100 shadow-sm">
@@ -34,7 +47,7 @@ function Topbar() {
             </button>
 
             <button className="flex items-center h-12 mr-4">
-              <p className="topbar-btn mr-4">Jean-Pierre Martin</p>
+              <p className="topbar-btn mr-4">{username}</p>
               <img
                 className="items-center mr-4 w-13 h-13"
                 src={JPM}

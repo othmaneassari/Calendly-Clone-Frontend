@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Navigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../../Styles/HomePage.css";
@@ -6,8 +6,10 @@ import google from "../../assets/icon/google.svg";
 import iconeuser from "../../assets/icon/iconeuser.svg";
 import lock from "../../assets/icon/lock.png";
 import Imageflex from "../../assets/icon/Imageflex.png";
+import { useAuth } from "./JWT Management/AuthProvider";
 
 function Login() {
+  const { token, setToken, claims, setClaims } = useAuth();
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({
     email: "",
@@ -16,13 +18,13 @@ function Login() {
   const [errors, setErrors] = useState({
     email: "",
     password: "",
+    credentials: "",
   });
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  console.log(user);
   let isValid = true;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,16 +65,26 @@ function Login() {
       });
       axios
         .post("https://localhost:7210/api/Authenticate/Login", user)
-        .then((response) => setLoggedIn(true))
-        .catch((error) => console.error("Error fetching register:", error));
-      console.log("Logged in successfully !");
-    } else {
-      console.log("Login failed hhh");
-    }
-    if (loggedIn) {
-      return <Navigate to="/Dashboard" />;
+        .then((response) => {
+          setLoggedIn(true);
+          setToken(response.data.token);
+        })
+        .catch((error) => {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            credentials: "Email or Password incorrect !",
+          }));
+          console.error("Error fetching register:", error);
+        });
     }
   };
+  if (loggedIn) {
+    return <Navigate to="/Dashboard" />;
+  }
+
+  if (token) {
+    return <Navigate to="/Dashboard" replace />;
+  }
 
   return (
     <div className="app">
@@ -139,10 +151,17 @@ function Login() {
               </span>
             )}
           </form>
-          <div className="password flex justify-center items-center  mb-8 mt-2 text-[13px]">
+          <div className="password flex justify-center items-center mt-2 text-[13px]">
             <a className="link  text-center" href="link">
               Forgot your password ?
             </a>
+          </div>
+          <div className="text-center mb-[10px]">
+            {errors.credentials && (
+              <span className="text-red-600 text-[11px] mt-3">
+                {errors.credentials}
+              </span>
+            )}
           </div>
           <div className="flex justify-center items-center flex-col">
             <div className="flex justify-center items-center">

@@ -30,7 +30,6 @@ function Register() {
 
   const registerfn = () => {
     // retrieve the form data and set the formdata state
-    console.log(formData);
 
     // valaidate the form data
     let isValid = true;
@@ -96,7 +95,7 @@ function Register() {
       if (formData.password !== formData.confirmPassword) {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          confirmPassword: "Password and Confirm Password do not match",
+          confirmPassword: "Passwords do not match",
         }));
         isValid = false;
       } else {
@@ -117,12 +116,10 @@ function Register() {
             .post("https://localhost:7210/api/Authenticate/register", user)
             .then((response) => {
               setIsRegistered(true);
+              // console.log(response);
             })
             .catch((error) => toast.error(error.response.data.message));
-          console.log("Registered successfully !");
         }
-      } else {
-        console.log("Registration failed hhh");
       }
     };
     validateUser();
