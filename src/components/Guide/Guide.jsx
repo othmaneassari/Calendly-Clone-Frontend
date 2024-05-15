@@ -29,6 +29,13 @@ export default function Guide() {
           <img src={plus} alt="" />
         </button>
       </div>
+      <div className="flex justify-center items-center flex-col max-w-[70%] m-auto">
+        <div className="flex items-center flex-col justify-center w-full mx-auto">
+          <button className="btn-primary-b border p-4 flex items-center w-full max-sm:mr-0 mb-5 ">
+            Cancel
+          </button>
+        </div>
+      </div>
       <div>
         <Link> Home </Link>
         <Link

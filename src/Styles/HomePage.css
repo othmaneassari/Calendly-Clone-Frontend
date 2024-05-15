@@ -39,6 +39,7 @@ a:hover {
   display: flex;
   justify-content: center;
 }
+
 .button {
   background-color: #6572e1;
   padding: 10px;
@@ -62,6 +63,22 @@ a:hover {
 
   transition: 0.3 linear ease-in-out;
 }
+
+.btn-primary-b {
+  padding: 25px 50px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 13px;
+  gap: 10px;
+  background-color: #fafafb;
+  color: #56647e;
+  font-weight: 600;
+  max-height: 40px;
+
+  transition: 0.3 linear ease-in-out;
+}
+
 .btn-primary:hover {
   background-color: #6d7bf4;
 }
@@ -240,3 +257,59 @@ a:hover {
   width: 10px !important;
   border-radius: 100% !important;
 }
+
+.custom-radio input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.custom-radio-span {
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 2px solid #6572e1;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-radio input[type="radio"]:checked + .custom-radio-span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #6572e1;
+  border-radius: 50%;
+}
+
+.horizontal-line {
+  width: 100%;
+  border: none;
+  border-top: 2px solid #dcdee4;
+  margin: 20px 0;
+}
+
+/* .custom-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-underline::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  left: 0;
+  bottom: -2px;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.custom-underline:hover::after {
+  transform: scaleX(1);
+} */
