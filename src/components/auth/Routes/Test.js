@@ -6,6 +6,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Dashboard from "../../Dashboard/Dashboard";
 import HeroSection from "../../HomePage/HeroSection";
+import ScheduleSettings from "../../navbars/ScheduleSettings";
 
 const ProtectedRoute = ({ element, isAuthenticated, ...props }) => {
   if (!isAuthenticated) {
@@ -24,6 +25,14 @@ const Test = () => {
     { path: "/Login", element: <Login /> },
     { path: "/Register", element: <Register /> },
     { path: "/Guide", element: <div>Guide Page</div> },
+    {
+      path: "/ScheduleSettings",
+      element: (
+        <div>
+          <ScheduleSettings />
+        </div>
+      ),
+    },
   ];
 
   return (
