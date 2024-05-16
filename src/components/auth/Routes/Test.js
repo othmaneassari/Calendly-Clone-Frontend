@@ -7,6 +7,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "../../Dashboard/Dashboard";
 import HeroSection from "../../HomePage/HeroSection";
 import ScheduleSettings from "../../navbars/ScheduleSettings";
+import AvailableHours from "../../navbars/AvailableHours";
+import ScheduleModify from "../../navbars/ScheduleModify";
 
 const ProtectedRoute = ({ element, isAuthenticated, ...props }) => {
   if (!isAuthenticated) {
@@ -33,6 +35,22 @@ const Test = () => {
         </div>
       ),
     },
+    // {
+    //   path: "/AvailableHours",
+    //   element: (
+    //     <div>
+    //       <AvailableHours />
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   path: "/ScheduleModify",
+    //   element: (
+    //     <div>
+    //       <ScheduleModify />
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (

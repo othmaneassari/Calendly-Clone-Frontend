@@ -9,9 +9,13 @@ import pin from "../../assets/icon/pin.svg";
 import down from "../../assets/icon/down.svg";
 import link from "../../assets/icon/link.svg";
 import next from "../../assets/icon/next.svg";
+import back from "../../assets/icon/back.svg";
+import write from "../../assets/icon/write.svg";
 
 function NewEventSidebar() {
   const [showComponent, setShowComponent] = useState(false);
+  const [dateRange, setDateRange] = useState(false);
+  const [dateEdit, setDateEdit] = useState(false);
   const handleclick = () => {};
   return (
     <section className="overlay h-[100vh] w-[100vw] fixed top-0 left-0 right-0">
@@ -39,75 +43,271 @@ function NewEventSidebar() {
           </button>
           {/* {showComponent && <ScheduleSettings />} */}
         </div>
-        <form className=" flex items-center flex-col justify-center max-w-[100%]">
+        <div className=" flex items-center flex-col justify-center max-w-[100%]">
           {showComponent ? (
             <>
-              <div className="w-full mt-3 mb-3">
-                <div className="flex flex-col items-start mb-2">
-                  <p className="text-[15px] font-medium">Date range</p>
-                  <p className="text-[13px]">Guests can schedule...</p>
-                </div>
-                <div className="flex items-center mb-2 space-x-2">
-                  <label className="custom-radio mx-2 my-2">
-                    <input
-                      className="mx-2"
-                      type="radio"
-                      name="DateRangeOption"
-                    ></input>
-                    <span className="custom-radio-span"></span>
-                  </label>
-                  <input
-                    className="bg-[#F7F7F9] rounded-lg border border-[#DFE1E7] h-[50px] w-[50px] pl-1"
-                    placeholder="60"
-                    value=""
-                  ></input>
-                  <select
-                    className="bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] h-[50px] w-[150px]"
-                    placeholder="Calendar days"
-                    value=""
-                  ></select>
-                  <p className="text-[13px]">in the future</p>
-                </div>
-                <div className="flex items-center mb-2">
-                  <label className="custom-radio mx-2 my-2">
-                    <input
-                      className="mx-2"
-                      type="radio"
-                      name="DateRangeOption"
-                    ></input>
-                    <span className="custom-radio-span"></span>
-                  </label>
-                  <p className="text-[13px]">In a date range</p>
-                </div>
-                <div className="flex items-center mb-2">
-                  <label className="custom-radio mx-2 my-2">
-                    <input
-                      className="mx-2"
-                      type="radio"
-                      name="DateRangeOption"
-                    ></input>
-                    <span className="custom-radio-span"></span>
-                  </label>
-                  <p className="text-[13px]">Indefinitely in the future</p>
-                </div>
-              </div>
-              <hr className="horizontal-line"></hr>
-              <div className="flex flex-col w-full items-start">
-                <h1 className="text-[15px] items-start">Available hours</h1>
-                <p className="text-[13px] text-[#B3B9C5] text-justify">
-                  Define hours patterns or specific replacement dates for
-                  Calendly to propose free time on your calendar
-                </p>
-              </div>
-              <div className="flex items-center justify-between bg-transparent px-5 p-3 rounded-lg border border-[#DFE1E7] h-[60px] w-full my-10">
-                <div className="flex flex-col">
-                  <h1 className="text-[15px]">Sourabah Barua</h1>
-                  <p className="text-[13px] text-[#B3B9C5]">Mon-Fri, 9am-5pm</p>
-                </div>
-                <button>
-                  <img className="" src={next} alt=""></img>
-                </button>
-              </div>
+              {!dateRange ? (
+                <>
+                  <div className="w-full mt-3 mb-3">
+                    <div className="flex flex-col items-start mb-2">
+                      <p className="text-[15px] font-medium">Date range</p>
+                      <p className="text-[13px]">Guests can schedule...</p>
+                    </div>
+                    <div className="flex items-center mb-2 space-x-2">
+                      <label className="custom-radio mx-2 my-2">
+                        <input
+                          className="mx-2"
+                          type="radio"
+                          name="DateRangeOption"
+                        ></input>
+                        <span className="custom-radio-span"></span>
+                      </label>
+                      <input
+                        className="bg-[#F7F7F9] rounded-lg border border-[#DFE1E7] h-[50px] w-[50px] pl-1"
+                        placeholder="60"
+                        value=""
+                      ></input>
+                      <select
+                        className="bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] h-[50px] w-[150px]"
+                        placeholder="Calendar days"
+                        value=""
+                      ></select>
+                      <p className="text-[13px]">in the future</p>
+                    </div>
+                    <div className="flex items-center mb-2">
+                      <label className="custom-radio mx-2 my-2">
+                        <input
+                          className="mx-2"
+                          type="radio"
+                          name="DateRangeOption"
+                        ></input>
+                        <span className="custom-radio-span"></span>
+                      </label>
+                      <p className="text-[13px]">In a date range</p>
+                    </div>
+                    <div className="flex items-center mb-2">
+                      <label className="custom-radio mx-2 my-2">
+                        <input
+                          className="mx-2"
+                          type="radio"
+                          name="DateRangeOption"
+                        ></input>
+                        <span className="custom-radio-span"></span>
+                      </label>
+                      <p className="text-[13px]">Indefinitely in the future</p>
+                    </div>
+                  </div>
+                  <hr className="horizontal-line"></hr>
+                  <div className="flex flex-col w-full items-start">
+                    <h1 className="text-[15px] items-start">Available hours</h1>
+                    <p className="text-[13px] text-[#B3B9C5] text-justify">
+                      Define hours patterns or specific replacement dates for
+                      Calendly to propose free time on your calendar
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between bg-transparent px-5 p-3 rounded-lg border border-[#DFE1E7] h-[60px] w-full my-10">
+                    <div className="flex flex-col">
+                      <h1 className="text-[15px]">Sourabah Barua</h1>
+                      <p className="text-[13px] text-[#B3B9C5]">
+                        Mon-Fri, 9am-5pm
+                      </p>
+                    </div>
+                    <button>
+                      <img
+                        className=""
+                        src={next}
+                        alt=""
+                        onClick={() => setDateRange(true)}
+                      ></img>
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className=" flex items-center flex-col justify-center w-full">
+                    <div className="flex items-center w-full text-[#56647E] text-[15px] justify-between mt-5 mb-5">
+                      <button>
+                        <img
+                          className="mr-2"
+                          src={back}
+                          alt=""
+                          onClick={() => setDateRange(false)}
+                        ></img>
+                      </button>
+                      <h2 className="flex-grow font-semibold">
+                        Available Hours
+                      </h2>
+                      <button>
+                        <img
+                          className="ml-2"
+                          src={write}
+                          alt=""
+                          onClick={() => setDateEdit((prev) => !prev)}
+                        ></img>
+                      </button>
+                    </div>
+                    {!dateEdit ? (
+                      <div className="bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] h-full w-full mb-5">
+                        <div className="flex justify-between text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Monday</h2>
+                          <h2>9am - 5pm</h2>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Tuesday</h2>
+                          <h2>9am - 5pm</h2>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Wednesday</h2>
+                          <h2>9am - 5pm</h2>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Thursday</h2>
+                          <h2>9am - 5pm</h2>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Friday</h2>
+                          <h2>9am - 5pm</h2>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Saturday</h2>
+                          <h2>9am - 5pm</h2>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Sunday</h2>
+                          <h2>9am - 5pm</h2>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] h-full w-full mb-5">
+                        <div className="flex justify-between items-center text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Monday</h2>
+                          <div className="flex items-center">
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="9am"
+                            />
+                            <p>-</p>
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="5pm"
+                            />
+                          </div>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between items-center text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Tuesday</h2>
+                          <div className="flex items-center">
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="9am"
+                            />
+                            <p>-</p>
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="5pm"
+                            />
+                          </div>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between items-center text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Wednesday</h2>
+                          <div className="flex items-center">
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="9am"
+                            />
+                            <p>-</p>
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="5pm"
+                            />
+                          </div>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between items-center text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Thursday</h2>
+                          <div className="flex items-center">
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="9am"
+                            />
+                            <p>-</p>
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="5pm"
+                            />
+                          </div>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between items-center text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Friday</h2>
+                          <div className="flex items-center">
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="9am"
+                            />
+                            <p>-</p>
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="5pm"
+                            />
+                          </div>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between items-center text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Saturday</h2>
+                          <div className="flex items-center">
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="9am"
+                            />
+                            <p>-</p>
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="5pm"
+                            />
+                          </div>
+                        </div>
+                        <hr className="horizontal-line" />
+                        <div className="flex justify-between items-center text-[13px] text-[#56647E] font-semibold ">
+                          <h2>Sunday</h2>
+                          <div className="flex items-center">
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="9am"
+                            />
+                            <p>-</p>
+                            <input
+                              className="px-5 p-3 rounded-lg border border-[#E6E8EC] h-[10px] w-[70px]"
+                              alt=""
+                              placeholder="5pm"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </>
           ) : (
             <>
@@ -248,7 +448,7 @@ function NewEventSidebar() {
               </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </section>
   );
