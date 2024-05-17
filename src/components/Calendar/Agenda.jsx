@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../Styles/HomePage.css";
 import print from "../../assets/icon/print.svg";
 import plusplus from "../../assets/icon/plusplus.svg";
@@ -9,7 +9,7 @@ import blue from "../../assets/icon/blue.svg";
 import green from "../../assets/icon/green.svg";
 import grue from "../../assets/icon/grue.svg";
 
-function Agenda() {
+function Agenda({ overlay, setOverlay }) {
   return (
     <div className="right-pane px-5">
       <div className="container p-6 bg-[#F9F9FE] rounded-lg px-7 content-between w-[100%] flex-col">
@@ -20,7 +20,10 @@ function Agenda() {
             <button className="btn-icon border p-4 flex items-center mx-2">
               <img src={print} alt="" />
             </button>
-            <button className="btn-secondary border p-4 flex items-center mx-2">
+            <button
+              onClick={() => setOverlay(true)}
+              className="btn-secondary border p-4 flex items-center mx-2"
+            >
               <img src={plusplus} alt="" />
               New Meeting
             </button>

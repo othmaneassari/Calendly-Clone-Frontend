@@ -12,32 +12,42 @@ import next from "../../assets/icon/next.svg";
 import back from "../../assets/icon/back.svg";
 import write from "../../assets/icon/write.svg";
 
-function NewEventSidebar() {
+function NewEventSidebar({ overlay, setOverlay }) {
   const [showComponent, setShowComponent] = useState(false);
   const [dateRange, setDateRange] = useState(false);
   const [dateEdit, setDateEdit] = useState(false);
   const handleclick = () => {};
   return (
     <section className="overlay h-[100vh] w-[100vw] fixed top-0 left-0 right-0">
-      <div className="container py-12  bg-[#F9F9FE] h-[100vh]  rounded-lg px-7 content-between w-[500px] flex-col absolute right-0 top-0">
-        <div className="flex justify-between items-center mt-6">
+      <div className="container py-12  bg-white h-[100vh]  rounded-lg px-7 content-between w-[500px] flex-col absolute right-0 top-0">
+        <div className="flex justify-between items-center">
           <h1 className="text-left text-[25px] mt-0">Event Creation</h1>
-          <img
-            className="h-[23px] w-[23px] text-right align-middle"
-            src={close}
-            alt="close-icon"
-          ></img>
+          <button onClick={() => setOverlay(false)}>
+            <img
+              className="h-[23px] w-[23px] text-right align-middle"
+              src={close}
+              alt="close-icon"
+            />
+          </button>
         </div>
         <div className="flex justify-center space-x-5 mt-2">
           <button
             onClick={() => setShowComponent(false)}
-            className="text-[#6572E1] font-semibold underline"
+            className={
+              showComponent
+                ? "text-[#B3B9C5]"
+                : "text-[#6572E1] font-semibold underline"
+            }
           >
             Event Details
           </button>
           <button
-            className="text-[#B3B9C5]"
             onClick={() => setShowComponent(true)}
+            className={
+              !showComponent
+                ? "text-[#B3B9C5]"
+                : "text-[#6572E1] font-semibold underline"
+            }
           >
             Scheduling Settings
           </button>
