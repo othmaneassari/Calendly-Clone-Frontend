@@ -23,6 +23,7 @@ import NewEventSidebar from "../navbars/NewEventSidebar";
 
 function Dashboard() {
   const { token, setToken } = useAuth();
+  const [overlay, setOverlay] = useState(false);
   const navigate = useNavigate();
 
   if (!token) {
@@ -36,9 +37,9 @@ function Dashboard() {
       <Sidebar />
       <div className="text-between pt-[100px] ml-[6%] flex">
         <Calendar />
-        <Agenda />
+        <Agenda overlay={overlay} setOverlay={setOverlay} />
       </div>
-      <NewEventSidebar />
+      {overlay && <NewEventSidebar overlay={overlay} setOverlay={setOverlay} />}
     </div>
   );
 }
