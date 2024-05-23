@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../../Styles/HomePage.css";
 import print from "../../assets/icon/print.svg";
 import plusplus from "../../assets/icon/plusplus.svg";
@@ -10,6 +11,14 @@ import green from "../../assets/icon/green.svg";
 import grue from "../../assets/icon/grue.svg";
 
 function Agenda({ overlay, setOverlay }) {
+  axios
+    .get("https://localhost:7210/api/EventTypes/create-eventtype")
+    .then((response) => {
+      console.log(response.error.data);
+    })
+    .catch((error) => {
+      console.error("Error creating event type:", error);
+    });
   return (
     <div className="right-pane px-5">
       <div className="container p-6 bg-[#F9F9FE] rounded-lg px-7 content-between w-[100%] flex-col">
