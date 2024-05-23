@@ -2,6 +2,7 @@ import React from "react";
 import back from "../../assets/icon/back.svg";
 import write from "../../assets/icon/write.svg";
 import close from "../../assets/icon/close.svg";
+import { useState } from "react";
 
 function ScheduleModify() {
   return (

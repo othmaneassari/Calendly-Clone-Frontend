@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import ScheduleSettings from "./ScheduleSettings";
 import close from "../../assets/icon/close.svg";
 import clock from "../../assets/icon/clock.svg";
@@ -17,6 +18,35 @@ function NewEventSidebar({ overlay, setOverlay }) {
   const [dateRange, setDateRange] = useState(false);
   const [dateEdit, setDateEdit] = useState(false);
   const handleclick = () => {};
+
+  const [event, setEvent] = useState({
+    name: "",
+    duration: "",
+    description: "",
+  });
+  const [formData, setFormData] = useState({
+    name: "",
+    duration: "",
+    description: "",
+  });
+
+  const renderdata = (e) => {
+    axios
+      .post("https://localhost:7210/api/EventTypes/create-eventtype", {
+        name: formData.name,
+        duration: formData.duration,
+        description: formData.description,
+        eventType: "string",
+        location: "string",
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error creating event type:", error);
+      });
+  };
+  renderdata();
   return (
     <section className="overlay h-[100vh] w-[100vw] fixed top-0 left-0 right-0">
       <div className="container py-12  bg-white h-[100vh]  rounded-lg px-7 content-between w-[500px] flex-col absolute right-0 top-0">
@@ -336,7 +366,10 @@ function NewEventSidebar({ overlay, setOverlay }) {
                       name=""
                       id=""
                       placeholder="Lorem Upsum..."
-                      value=""
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -355,6 +388,10 @@ function NewEventSidebar({ overlay, setOverlay }) {
                       name=""
                       id=""
                       placeholder="1h30min"
+                      value={formData.duration}
+                      onChange={(e) =>
+                        setFormData({ ...formData, duration: e.target.value })
+                      }
                     />
                     <img className="ml-2" src={group} alt=""></img>
                   </div>
@@ -435,7 +472,10 @@ function NewEventSidebar({ overlay, setOverlay }) {
                     name=""
                     id=""
                     placeholder="Lorem Upsum..."
-                    value=""
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
                   ></input>
                 </div>
               </div>
@@ -452,7 +492,10 @@ function NewEventSidebar({ overlay, setOverlay }) {
             </div>
             <div className="flex justify-center items-center flex-col max-w-[70%] m-auto">
               <div className="flex items-center flex-col justify-center w-full mx-auto">
-                <button className="btn-primary border p-4 flex items-center w-full max-sm:mr-0 mb-5 ">
+                <button
+                  onClick={() => renderdata()}
+                  className="btn-primary border p-4 flex items-center w-full max-sm:mr-0 mb-5 "
+                >
                   Save
                 </button>
               </div>
