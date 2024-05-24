@@ -29,7 +29,16 @@ function NewEventSidebar({ overlay, setOverlay }) {
     duration: "",
     description: "",
   });
-
+  const [location, setLocation] = useState("");
+  const zoom = () => {
+    setLocation("Zoom");
+  };
+  const phone = () => {
+    setLocation("Phone Call");
+  };
+  const irl = () => {
+    setLocation("In Person Meeting");
+  };
   const renderdata = (e) => {
     axios
       .post("https://localhost:7210/api/EventTypes/create-eventtype", {
@@ -37,7 +46,7 @@ function NewEventSidebar({ overlay, setOverlay }) {
         duration: formData.duration,
         description: formData.description,
         eventType: "string",
-        location: "string",
+        location: location,
       })
       .then((response) => {
         console.log(response.data);
@@ -401,7 +410,14 @@ function NewEventSidebar({ overlay, setOverlay }) {
                 Emplacement
               </h2>
               <div className="flex align-center justify-between space-x-3">
-                <button className="rounded-lg border-2 border-[#6572E1] w-[100px] h-[93px] flex justify-center items-center">
+                <button
+                  className={
+                    location === "Zoom"
+                      ? "rounded-lg border-2 border-[#6572E1] w-[100px] h-[93px] flex justify-center items-center"
+                      : "rounded-lg border-2 border-[#D8DBE1] w-[100px] h-[93px] flex justify-center items-center"
+                  }
+                  onClick={zoom}
+                >
                   <div className="flex flex-col justify-center items-center">
                     <img
                       className="max-h-full max-w-full mb-3"
@@ -413,7 +429,14 @@ function NewEventSidebar({ overlay, setOverlay }) {
                     </h2>
                   </div>
                 </button>
-                <button className="rounded-lg border-2 border-[#D8DBE1] w-[100px] h-[93px] flex justify-center items-center">
+                <button
+                  className={
+                    location === "Phone Call"
+                      ? "rounded-lg border-2 border-[#6572E1] w-[100px] h-[93px] flex justify-center items-center"
+                      : "rounded-lg border-2 border-[#D8DBE1] w-[100px] h-[93px] flex justify-center items-center"
+                  }
+                  onClick={phone}
+                >
                   <div className="flex flex-col justify-center items-center">
                     <img
                       className="max-h-full max-w-full mb-3"
@@ -425,7 +448,14 @@ function NewEventSidebar({ overlay, setOverlay }) {
                     </h2>
                   </div>
                 </button>
-                <button className="rounded-lg border-2 border-[#D8DBE1] w-[100px] h-[93px] flex justify-center items-center">
+                <button
+                  className={
+                    location === "In Person Meeting"
+                      ? "rounded-lg border-2 border-[#6572E1] w-[100px] h-[93px] flex justify-center items-center"
+                      : "rounded-lg border-2 border-[#D8DBE1] w-[100px] h-[93px] flex justify-center items-center"
+                  }
+                  onClick={irl}
+                >
                   <div className="flex flex-col justify-center items-center">
                     <img
                       className="max-h-full max-w-full mt-2 mb-3"
