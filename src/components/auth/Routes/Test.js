@@ -9,6 +9,7 @@ import HeroSection from "../../HomePage/HeroSection";
 import ScheduleSettings from "../../navbars/ScheduleSettings";
 import AvailableHours from "../../navbars/AvailableHours";
 import ScheduleModify from "../../navbars/ScheduleModify";
+import Contacts from "../Contacts/Contacts";
 
 const ProtectedRoute = ({ element, isAuthenticated, ...props }) => {
   if (!isAuthenticated) {
@@ -65,6 +66,12 @@ const Test = () => {
         path="/Dashboard"
         element={
           <ProtectedRoute isAuthenticated={!!token} element={<Dashboard />} />
+        }
+      />
+      <Route
+        path="/Contacts"
+        element={
+          <ProtectedRoute isAuthenticated={!!token} element={<Contacts />} />
         }
       />
     </Routes>

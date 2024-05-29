@@ -23,11 +23,15 @@ function NewEventSidebar({ overlay, setOverlay }) {
     name: "",
     duration: "",
     description: "",
+    startdate: "",
+    enddate: "",
   });
   const [formData, setFormData] = useState({
     name: "",
     duration: "",
     description: "",
+    startdate: "",
+    enddate: "",
   });
   const [location, setLocation] = useState("");
   const zoom = () => {
@@ -47,6 +51,8 @@ function NewEventSidebar({ overlay, setOverlay }) {
         description: formData.description,
         eventType: "string",
         location: location,
+        startdate: formData.startdate,
+        enddate: formData.enddate,
       })
       .then((response) => {
         console.log(response.data);
@@ -59,7 +65,7 @@ function NewEventSidebar({ overlay, setOverlay }) {
   return (
     <section className="overlay h-[100vh] w-[100vw] fixed top-0 left-0 right-0">
       <div className="container py-12  bg-white h-[100vh]  rounded-lg px-7 content-between w-[500px] flex-col absolute right-0 top-0">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center pt-5">
           <h1 className="text-left text-[25px] mt-0">Event Creation</h1>
           <button onClick={() => setOverlay(false)}>
             <img
@@ -361,12 +367,12 @@ function NewEventSidebar({ overlay, setOverlay }) {
           ) : (
             <>
               <div className="firstlast flex-col justify-center w-full max-sm:flex-col mr-0 mb-0">
-                <div className="flex flex-col   my-2 mr-[27px] max-sm:mt-0 w-full pt-0">
+                <div className="flex flex-col   my-1 mr-[27px] max-sm:mt-0 w-full pt-0">
                   <label
                     htmlFor="event name"
-                    className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-5"
+                    className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-3"
                   >
-                    Nom de l'evenement
+                    Event Name
                   </label>
                   <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7]">
                     <input
@@ -382,10 +388,57 @@ function NewEventSidebar({ overlay, setOverlay }) {
                     />
                   </div>
                 </div>
-                <div className="flex flex-col  my-2 max-sm:mt-0 w-full">
+                <div className="firstlast flex justify-center w-full max-sm:flex-col mr-0 mb-0">
+                  <div className="flex flex-col   my-0 mr-[27px] max-sm:mt-0 w-full pt-0">
+                    <label
+                      htmlFor="first name"
+                      className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-3"
+                    >
+                      Start Date
+                    </label>
+                    <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7]  ">
+                      <input
+                        className="w-full"
+                        type="first name"
+                        name=""
+                        id=""
+                        placeholder="Start Date"
+                        value={formData.startdate}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            startdate: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col  my-0 max-sm:mt-0 w-full">
+                    <label
+                      htmlFor="last name"
+                      className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-3"
+                    >
+                      End Date
+                    </label>
+                    <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] mb-0">
+                      <input
+                        className="w-full"
+                        type="Last name"
+                        name=""
+                        id=""
+                        placeholder="End Date"
+                        value={formData.enddate}
+                        onChange={(e) =>
+                          setFormData({ ...formData, enddate: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col  my-0 max-sm:mt-0 w-full">
                   <label
                     htmlFor="event duration"
-                    className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-5"
+                    className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-3"
                   >
                     Duration
                   </label>
@@ -402,7 +455,6 @@ function NewEventSidebar({ overlay, setOverlay }) {
                         setFormData({ ...formData, duration: e.target.value })
                       }
                     />
-                    <img className="ml-2" src={group} alt=""></img>
                   </div>
                 </div>
               </div>
@@ -467,15 +519,6 @@ function NewEventSidebar({ overlay, setOverlay }) {
                     </h2>
                   </div>
                 </button>
-                <button className="rounded-lg border-2 border-[#D8DBE1] w-[50px] h-[93px] flex justify-center items-center">
-                  <div className="flex flex-col justify-center items-center">
-                    <img
-                      className="max-h-full max-w-full"
-                      src={down}
-                      alt=""
-                    ></img>
-                  </div>
-                </button>
               </div>
               <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] my-2">
                 <div className="flex items-center justify-between bg-white px-5 p-3 rounded-lg border border-[#DFE1E7]">
@@ -495,7 +538,7 @@ function NewEventSidebar({ overlay, setOverlay }) {
                 >
                   Description/Instructions
                 </label>
-                <div className="flex justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] h-[100px]">
+                <div className="flex justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] h-[50px]">
                   <input
                     className="w-full h-full p-0 m-0 align-top text-left"
                     type="event name"

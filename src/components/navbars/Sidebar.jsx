@@ -52,8 +52,12 @@ function Sidebar() {
           </button>
 
           <button className="btn-icon bg-[#F3F4F6] border p-4 flex items-center w-13 h-13 mt-5 mb-5">
-            <Link to="/User" onClick={() => setPage("user")} className="user">
-              <img className="items-center" src={iconeuser} alt="user" />
+            <Link
+              to="/Contacts"
+              onClick={() => setPage("contacts")}
+              className="contacts"
+            >
+              <img className="items-center" src={iconeuser} alt="contacts" />
             </Link>
           </button>
 

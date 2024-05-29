@@ -293,6 +293,12 @@ a:hover {
   margin: 20px 0;
 }
 
+.horizontal-line-contacts {
+  width: 100%;
+  border: none;
+  border-top: 2px solid #dcdee4;
+}
+
 /* .custom-underline {
   position: relative;
   display: inline-block;
