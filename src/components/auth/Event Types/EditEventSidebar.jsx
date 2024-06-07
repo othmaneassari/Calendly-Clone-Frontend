@@ -13,7 +13,7 @@ import back from "../../assets/icon/back.svg";
 import write from "../../assets/icon/write.svg";
 import ReactDatePicker from "react-datepicker";
 
-function NewEventSidebar({ overlay, setOverlay }) {
+function EditEventSidebar({ overlay, setOverlay }) {
   const [showComponent, setShowComponent] = useState(false);
   const [dateRange, setDateRange] = useState(false);
   const [dateEdit, setDateEdit] = useState(false);
@@ -774,4 +774,5 @@ function NewEventSidebar({ overlay, setOverlay }) {
     </form>
   );
 }
-export default NewEventSidebar;
+
+export default EditEventSidebar;

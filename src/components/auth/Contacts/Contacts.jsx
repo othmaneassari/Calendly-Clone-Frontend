@@ -37,7 +37,7 @@ function Contacts() {
 
             <button className="btn-secondary border p-4 flex items-center mx-2">
               <img src={plusplus} alt="" />
-              New Meeting
+              Create Contact
             </button>
           </div>
         </div>
