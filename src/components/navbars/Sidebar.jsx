@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../auth/JWT Management/AuthProvider";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/icon/logo.png";
 import dashboard from "../../assets/icon/dashboard.png";
 import car from "../../assets/icon/car.png";
@@ -12,7 +14,14 @@ import iconeuser from "../../assets/icon/iconeuser.svg";
 import "../../Styles/HomePage.css";
 
 function Sidebar() {
-  const [setPage] = useState("home");
+  const [page, setPage] = useState("home");
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setToken();
+    navigate("/Login", { replace: true });
+  };
   return (
     <div>
       <ul className="links">
@@ -52,8 +61,12 @@ function Sidebar() {
           </button>
 
           <button className="btn-icon bg-[#F3F4F6] border p-4 flex items-center w-13 h-13 mt-5 mb-5">
-            <Link to="/User" onClick={() => setPage("user")} className="user">
-              <img className="items-center" src={iconeuser} alt="user" />
+            <Link
+              to="/Contacts"
+              onClick={() => setPage("contacts")}
+              className="contacts"
+            >
+              <img className="items-center" src={iconeuser} alt="contacts" />
             </Link>
           </button>
 
@@ -89,8 +102,8 @@ function Sidebar() {
           <div className="mt-[150px]">
             <button className="btn-icon bg-[#F3F4F6] border p-4 flex items-center w-13 h-13">
               <Link
-                to="/Logoff"
-                onClick={() => setPage("logoff")}
+                to="/Login"
+                onClick={() => handleLogout("logout")}
                 className="logoff"
               >
                 <img className="items-center" src={power} alt="logoff" />

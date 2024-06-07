@@ -9,12 +9,11 @@ import { jwtDecode } from "jwt-decode";
 import Login from "../auth/Login";
 
 function Topbar() {
-  const [setPage] = useState("home");
+  const [page, setPage] = useState("home");
   const [name, setName] = useState("");
   const token = localStorage.getItem("token");
   const { username, email, id } = jwtDecode(token);
   const decodedHeader = jwtDecode(token, { header: true });
-  console.log(username);
 
   // useEffect(() => {
   //   setName(jwtDecode(token).username);

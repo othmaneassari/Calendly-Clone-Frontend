@@ -122,6 +122,42 @@ a:hover {
   font-family: "poppins", sans-serif;
 }
 
+.btn-eventtype {
+  width: 152px;
+  height: 29px;
+  border-radius: 15px;
+
+  margin-top: 10px;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  font-size: 14px;
+  font-family: "poppins", sans-serif;
+}
+
+.modal {
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.overlaymodal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 999;
+}
+
 .loginbtn {
   /* margin-left: 40%; */
 }
@@ -293,6 +329,12 @@ a:hover {
   margin: 20px 0;
 }
 
+.horizontal-line-contacts {
+  width: 100%;
+  border: none;
+  border-top: 2px solid #dcdee4;
+}
+
 /* .custom-underline {
   position: relative;
   display: inline-block;
@@ -313,3 +355,15 @@ a:hover {
 .custom-underline:hover::after {
   transform: scaleX(1);
 } */
+.checkInput .EmplacementInput {
+  border: 1px solid #d8dbe1;
+}
+.checkInput input {
+  display: none;
+}
+.checkInput input:checked + .EmplacementInput {
+  border: 2px solid #6572e1; /* Increased border width for better visibility */
+}
+.o-ml-0 {
+  margin-left: 0 !important;
+}
