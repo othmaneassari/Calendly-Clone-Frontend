@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NewEventSidebar from "../../navbars/NewEventSidebar";
+import EditEventSidebar from "./EditEventSidebar";
 import axios from "axios";
 import Modal from "react-modal";
 import menu from "../../../assets/icon/menu.svg";
@@ -31,27 +31,27 @@ function EventTypesBox({ box, setRefresh, refresh }) {
     closeModal();
   };
 
-  const handleModify = (e, id) => {
-    e.preventDefault();
-    setOverlay(true);
+  // const handleModify = (e, id) => {
+  //   e.preventDefault();
+  //   setOverlay(true);
 
-    // open sidebar
-    // set the evenettype id prop from the parent element
+  //   // open sidebar
+  //   // set the evenettype id prop from the parent element
 
-    axios
-      .put("https://localhost:7210/api/EventTypes/update-eventtype")
-      .then((response) => {
-        console.log(`Updated box with id: ${box.id}`);
-        console.log(response.data);
-        setBoxes((prevBoxes) =>
-          prevBoxes.map((b) => (b.id === box.id ? response.data : b))
-        );
-        toast.success("Event updated successfully");
-        setRefresh((prev) => !prev);
-      })
-      .catch((error) => console.error("Error updating box:", error));
-    closeModal();
-  };
+  //   axios
+  //     .put("https://localhost:7210/api/EventTypes/update-eventtype")
+  //     .then((response) => {
+  //       console.log(`Updated box with id: ${box.id}`);
+  //       console.log(response.data);
+  //       setBoxes((prevBoxes) =>
+  //         prevBoxes.map((b) => (b.id === box.id ? response.data : b))
+  //       );
+  //       toast.success("Event updated successfully");
+  //       setRefresh((prev) => !prev);
+  //     })
+  //     .catch((error) => console.error("Error updating box:", error));
+  //   closeModal();
+  // };
   return (
     <div className="box">
       <div className="items-center justify-between bg-transparent px-5 p-3 rounded-lg border border-[#DFE1E7] h-[150px] w-[350px] my-5 mx-5 relative">
@@ -78,7 +78,7 @@ function EventTypesBox({ box, setRefresh, refresh }) {
         >
           <button
             className="bg-gray-100 px-6 py-1 rounded-md w-full mb-1"
-            onClick={() => handleModify(box.id)}
+            onClick={() => setOverlay(true)}
           >
             Edit
           </button>
@@ -100,6 +100,16 @@ function EventTypesBox({ box, setRefresh, refresh }) {
           </button>
         </div>
       </div>
+      {overlay && (
+        <EditEventSidebar
+          overlay={overlay}
+          setOverlay={setOverlay}
+          item={box}
+          setRefresh={setRefresh}
+          refresh={refresh}
+          setModalIsOpen={setModalIsOpen}
+        />
+      )}
     </div>
   );
 }

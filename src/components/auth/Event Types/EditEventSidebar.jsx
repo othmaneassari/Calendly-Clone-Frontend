@@ -1,33 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { parseISO } from "date-fns";
 import axios from "axios";
-import close from "../../assets/icon/close.svg";
-import clock from "../../assets/icon/clock.svg";
-import video from "../../assets/icon/video.svg";
-import telephone from "../../assets/icon/telephone.svg";
-import pin from "../../assets/icon/pin.svg";
-import link from "../../assets/icon/link.svg";
-import next from "../../assets/icon/next.svg";
-import back from "../../assets/icon/back.svg";
-import write from "../../assets/icon/write.svg";
-import ReactDatePicker from "react-datepicker";
+import close from "../../../assets/icon/close.svg";
+import clock from "../../../assets/icon/clock.svg";
+import video from "../../../assets/icon/video.svg";
+import telephone from "../../../assets/icon/telephone.svg";
+import pin from "../../../assets/icon/pin.svg";
+import link from "../../../assets/icon/link.svg";
+import next from "../../../assets/icon/next.svg";
+import back from "../../../assets/icon/back.svg";
+import write from "../../../assets/icon/write.svg";
 
-function EditEventSidebar({ overlay, setOverlay }) {
+function EditEventSidebar({
+  overlay,
+  setOverlay,
+  item,
+  setRefresh,
+  setModalIsOpen,
+}) {
   const [showComponent, setShowComponent] = useState(false);
   const [dateRange, setDateRange] = useState(false);
   const [dateEdit, setDateEdit] = useState(false);
+  const [boxes, setBoxes] = useState([]);
   const Navigate = useNavigate();
+  const { id } = useParams();
+
+  const [startDate, setStartDate] = useState(item.startDate);
+  useEffect(() => {
+    if (item && item.startDate) {
+      console.log("item.startdate", item.startDate);
+      const parsedDate = new Date(item.startDate);
+      if (!isNaN(parsedDate)) {
+        setStartDate(parsedDate);
+      }
+    }
+  }, [item]);
+
+  const [endDate, setEndDate] = useState(item.endDate);
+  useEffect(() => {
+    if (item && item.endDate) {
+      console.log("item.enddate", item.endDate);
+      const parsedDate = new Date(item.endDate);
+      if (!isNaN(parsedDate)) {
+        setEndDate(parsedDate);
+      }
+    }
+  }, [item]);
 
   const [formData, setFormData] = useState({
-    name: "",
-    duration: "01",
-    description: "",
-    location: "",
-    startdate: "",
-    enddate: "",
+    id: item.id,
+    name: item.name,
+    duration: item.duration,
+    description: item.description,
+    location: item.location,
+    startDate: item.startDate,
+    endDate: item.endDate,
   });
 
+  const handleLocationChange = (location) => {
+    console.log(item.location);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      location,
+    }));
+  };
   const [error, setError] = useState({
     name: "",
     duration: "",
@@ -54,7 +94,7 @@ function EditEventSidebar({ overlay, setOverlay }) {
   //   setFormData(formData.location === "In Person");
   // }
 
-  const handlesubmit = (e) => {
+  const handlesubmit = (e, box, item) => {
     e.preventDefault();
     let isValid = true;
 
@@ -106,70 +146,68 @@ function EditEventSidebar({ overlay, setOverlay }) {
         location: "",
       }));
     }
-    if (!formData.startdate) {
+    if (!formData.startDate) {
       setError((prevError) => ({
         ...prevError,
-        startdate: "Start date is required",
+        startDate: "Start date is required",
       }));
       isValid = false;
     } else {
       setError((prevError) => ({
         ...prevError,
-        startdate: "",
+        startDate: "",
       }));
     }
-    if (!formData.enddate) {
+    if (!formData.endDate) {
       setError((prevError) => ({
         ...prevError,
-        enddate: "End date is required",
+        endDate: "End date is required",
       }));
       isValid = false;
     } else {
       setError((prevError) => ({
         ...prevError,
-        enddate: "",
+        endDate: "",
       }));
     }
-    if (formData.startdate && formData.enddate) {
-      if (formData.enddate < formData.startdate) {
+    if (formData.startDate && formData.endDate) {
+      if (formData.endDate < formData.startDate) {
         setError((prevError) => ({
           ...prevError,
-          enddate: "End date can't be sooner than Start date",
+          endDate: "End date can't be sooner than Start date",
         }));
         isValid = false;
       } else {
         setError((prevError) => ({
           ...prevError,
-          enddate: "",
+          endDate: "",
         }));
       }
     }
     // setError("");
-
-    axios
-      .post("https://localhost:7210/api/EventTypes/create-eventtype", formData)
-      .then((response) => {
-        console.log(response);
-        console.log(formData);
-        toast.success(response.data.message);
-        if (response.data.status === "Success") {
-          setOverlay(false);
-          Navigate("/EventTypes");
-        }
-      })
-      .catch((error) => {
-        console.error("Error creating event type:", error);
-        toast.error(error.message);
-      });
+    if (isValid) {
+      axios
+        .put("https://localhost:7210/api/EventTypes/update-eventtype", formData)
+        .then((response) => {
+          toast.success("Event updated successfully");
+          setRefresh((prev) => !prev);
+          setModalIsOpen(false);
+          setTimeout(() => {
+            setOverlay(false);
+          }, 1000);
+        })
+        .catch((error) => {
+          console.error("Error updating event type:", error);
+          toast.error(error.message);
+        });
+    }
   };
   return (
     <form onSubmit={handlesubmit}>
-      <ToastContainer />
-
       <section className="overlay h-[100vh] w-[100vw] fixed top-0 left-0 right-0">
         <div className="container py-12  bg-white h-[100vh]  rounded-lg px-7 content-between w-[500px] flex-col absolute right-0 top-0">
           <div className="flex justify-between items-center pt-5">
-            <h1 className="text-left text-[25px] mt-0">Event Creation</h1>
+            <h1 className="text-left text-[25px] mt-0">Event Edit</h1>
             <button onClick={() => setOverlay(false)}>
               <img
                 className="h-[23px] w-[23px] text-right align-middle"
@@ -486,6 +524,7 @@ function EditEventSidebar({ overlay, setOverlay }) {
                         className="w-full"
                         type="event name"
                         name="name"
+                        defaultValue={item.name}
                         id=""
                         placeholder="Lorem Upsum..."
                         onChange={(e) => handleChange(e)}
@@ -507,18 +546,23 @@ function EditEventSidebar({ overlay, setOverlay }) {
                         Start Date
                       </label>
                       <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7]  ">
-                        <input
+                        <DatePicker
+                          selected={startDate}
+                          onChange={(date) => setStartDate(date)}
+                        />
+                        {/* <input
                           className="w-full"
                           type="date"
                           name="startdate"
                           id=""
                           placeholder="Start Date"
+                          defaultValue={item.startdate}
                           onChange={handleChange}
-                        />
+                        /> */}
                       </div>
-                      {error.startdate && (
+                      {error.startDate && (
                         <span className="text-red-600 text-[11px] mt-3">
-                          {error.startdate}
+                          {error.startDate}
                         </span>
                       )}
                     </div>
@@ -530,18 +574,23 @@ function EditEventSidebar({ overlay, setOverlay }) {
                         End Date
                       </label>
                       <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] mb-0">
-                        <input
+                        <DatePicker
+                          selected={endDate}
+                          onChange={(date) => setEndDate(date)}
+                        />
+                        {/* <input
                           className="w-full"
                           type="date"
                           name="enddate"
                           id=""
                           placeholder="End Date"
+                          defaultValue={item.enddate}
                           onChange={handleChange}
-                        />
+                        /> */}
                       </div>
-                      {error.enddate && (
+                      {error.endDate && (
                         <span className="text-red-600 text-[11px] mt-3">
-                          {error.enddate}
+                          {error.endDate}
                         </span>
                       )}
                     </div>
@@ -570,6 +619,7 @@ function EditEventSidebar({ overlay, setOverlay }) {
                         name="duration"
                         onChange={handleChange}
                         id=""
+                        defaultValue={item.duration}
                       >
                         <option value="01">1 hour</option>
                         <option value="02">2 hour</option>
@@ -591,14 +641,17 @@ function EditEventSidebar({ overlay, setOverlay }) {
                     <input
                       type="radio"
                       name="meeting"
-                      onChange={() =>
-                        setFormData({
-                          ...formData,
-                          location: "zoom",
-                        })
-                      }
+                      value="phone"
+                      checked={formData.location === "zoom"}
+                      onChange={() => handleLocationChange("zoom")}
                     />
-                    <div className="flex flex-col justify-center items-center rounded-lg w-[100px] h-[93px] EmplacementInput">
+                    <div
+                      className={`flex flex-col justify-center items-center rounded-lg w-[100px] h-[93px] EmplacementInput ${
+                        formData.location === "zoom"
+                          ? "border-2 border-[#6572E1]"
+                          : "border-2 border-[#D8DBE1]"
+                      }`}
+                    >
                       <img
                         className="max-h-full max-w-full mb-3"
                         src={video}
@@ -611,16 +664,19 @@ function EditEventSidebar({ overlay, setOverlay }) {
                   </label>
                   <label className=" flex justify-center items-center checkInput">
                     <input
-                      onChange={() =>
-                        setFormData({
-                          ...formData,
-                          location: "phone",
-                        })
-                      }
                       type="radio"
                       name="meeting"
+                      value="phone"
+                      checked={formData.location === "phone"}
+                      onChange={() => handleLocationChange("phone")}
                     />
-                    <div className="flex flex-col justify-center items-center rounded-lg w-[100px] h-[93px] EmplacementInput">
+                    <div
+                      className={`flex flex-col justify-center items-center rounded-lg w-[100px] h-[93px] EmplacementInput ${
+                        formData.location === "phone"
+                          ? "border-2 border-[#6572E1]"
+                          : "border-2 border-[#D8DBE1]"
+                      }`}
+                    >
                       <img
                         className="max-h-full max-w-full mb-3"
                         src={telephone}
@@ -633,16 +689,19 @@ function EditEventSidebar({ overlay, setOverlay }) {
                   </label>{" "}
                   <label className=" flex justify-center items-center checkInput">
                     <input
-                      onChange={() =>
-                        setFormData({
-                          ...formData,
-                          location: "irl",
-                        })
-                      }
                       type="radio"
                       name="meeting"
+                      value="irl"
+                      checked={formData.location === "irl"}
+                      onChange={() => handleLocationChange("irl")}
                     />
-                    <div className="flex flex-col justify-center items-center rounded-lg w-[100px] h-[93px] EmplacementInput">
+                    <div
+                      className={`flex flex-col justify-center items-center rounded-lg w-[100px] h-[93px] EmplacementInput ${
+                        formData.location === "irl"
+                          ? "border-2 border-[#6572E1]"
+                          : "border-2 border-[#D8DBE1]"
+                      }`}
+                    >
                       <img
                         className="max-h-full max-w-full mb-3"
                         src={pin}
@@ -731,6 +790,7 @@ function EditEventSidebar({ overlay, setOverlay }) {
                       type="text"
                       name="description"
                       placeholder="Lorem Upsum..."
+                      defaultValue={item.description}
                       onChange={handleChange}
                     ></input>
                   </div>
