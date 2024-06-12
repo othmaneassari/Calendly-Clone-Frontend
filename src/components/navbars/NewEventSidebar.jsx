@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import close from "../../assets/icon/close.svg";
@@ -11,7 +13,6 @@ import link from "../../assets/icon/link.svg";
 import next from "../../assets/icon/next.svg";
 import back from "../../assets/icon/back.svg";
 import write from "../../assets/icon/write.svg";
-import ReactDatePicker from "react-datepicker";
 
 function NewEventSidebar({ overlay, setOverlay }) {
   const [showComponent, setShowComponent] = useState(false);
@@ -57,7 +58,7 @@ function NewEventSidebar({ overlay, setOverlay }) {
   const handlesubmit = (e) => {
     e.preventDefault();
     let isValid = true;
-
+    console.log(formData);
     if (!formData.name) {
       setError((prevError) => ({
         ...prevError,
@@ -159,7 +160,6 @@ function NewEventSidebar({ overlay, setOverlay }) {
       })
       .catch((error) => {
         console.error("Error creating event type:", error);
-        toast.error(error.message);
       });
   };
   return (
@@ -488,7 +488,7 @@ function NewEventSidebar({ overlay, setOverlay }) {
                         name="name"
                         id=""
                         placeholder="Lorem Upsum..."
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -507,13 +507,14 @@ function NewEventSidebar({ overlay, setOverlay }) {
                         Start Date
                       </label>
                       <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7]  ">
-                        <input
+                        <DatePicker
                           className="w-full"
                           type="date"
                           name="startdate"
                           id=""
+                          selected={"06/27/2024"}
                           placeholder="Start Date"
-                          onChange={handleChange}
+                          onChange={(date) => setFormData(date)}
                         />
                       </div>
                       {error.startdate && (
@@ -530,13 +531,14 @@ function NewEventSidebar({ overlay, setOverlay }) {
                         End Date
                       </label>
                       <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] mb-0">
-                        <input
+                        <DatePicker
                           className="w-full"
                           type="date"
                           name="enddate"
+                          selected={"06/27/2024"}
                           id=""
                           placeholder="End Date"
-                          onChange={handleChange}
+                          onChange={(e) => console.log(e.target)}
                         />
                       </div>
                       {error.enddate && (

@@ -8,15 +8,13 @@ import axios from "axios";
 import search from "../../../assets/icon/search.svg";
 import print from "../../../assets/icon/print.svg";
 import plusplus from "../../../assets/icon/plusplus.svg";
-import threedots from "../../../assets/icon/threedots.svg";
-import menu from "../../../assets/icon/menu.svg";
-import map from "../../../assets/icon/menu.svg";
 
 function EventTypesList() {
   const [boxes, setBoxes] = useState([]);
   const [filter, setFilter] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [overlay, setOverlay] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -104,7 +102,12 @@ function EventTypesList() {
         </div>
       </div>
       {overlay && (
-        <EditEventSidebar overlay={overlay} setOverlay={setOverlay} />
+        <EditEventSidebar
+          overlay={overlay}
+          setOverlay={setOverlay}
+          setRefresh={setRefresh}
+          setModalIsOpen={setModalIsOpen}
+        />
       )}
     </div>
   );

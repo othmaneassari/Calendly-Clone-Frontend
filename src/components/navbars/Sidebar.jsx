@@ -42,9 +42,9 @@ function Sidebar() {
 
           <button className="btn-icon bg-[#F3F4F6] p-4 flex items-center w-13 h-13 mt-5 mb-5">
             <Link
-              to="/Analytics"
-              onClick={() => setPage("analytics")}
-              className="analytics"
+              to="/EventTypes"
+              onClick={() => setPage("eventtypes")}
+              className="eventtypes"
             >
               <img className="items-center" src={analytics} alt="analytics" />
             </Link>
