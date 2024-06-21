@@ -8,12 +8,14 @@ import axios from "axios";
 import search from "../../../assets/icon/search.svg";
 import print from "../../../assets/icon/print.svg";
 import plusplus from "../../../assets/icon/plusplus.svg";
+import NewEventSidebar from "../../navbars/NewEventSidebar";
 
 function EventTypesList() {
   const [boxes, setBoxes] = useState([]);
   const [filter, setFilter] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [overlay, setOverlay] = useState(false);
+  const [editoverlay, setEditOverlay] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
@@ -60,7 +62,10 @@ function EventTypesList() {
               <img className="items-center" src={print} alt="settings" />
             </button>
 
-            <button className="btn-secondary border p-4 flex items-center mx-2">
+            <button
+              className="btn-secondary border p-4 flex items-center mx-2"
+              onClick={() => setOverlay(true)}
+            >
               <img src={plusplus} alt="" />
               Create Event Type
             </button>
@@ -101,14 +106,15 @@ function EventTypesList() {
           </div> */}
         </div>
       </div>
-      {overlay && (
+      {editoverlay && (
         <EditEventSidebar
-          overlay={overlay}
-          setOverlay={setOverlay}
+          overlay={editoverlay}
+          setOverlay={setEditOverlay}
           setRefresh={setRefresh}
           setModalIsOpen={setModalIsOpen}
         />
       )}
+      {overlay && <NewEventSidebar overlay={overlay} setOverlay={setOverlay} />}
     </div>
   );
 }

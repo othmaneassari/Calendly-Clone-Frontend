@@ -20,6 +20,19 @@ function NewEventSidebar({ overlay, setOverlay }) {
   const [dateEdit, setDateEdit] = useState(false);
   const Navigate = useNavigate();
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const handleStartDateChange = (date) => {
+    setStartDate(new Date(date));
+    setFormData({ ...formData, startdate: date });
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(new Date(date));
+    setFormData({ ...formData, enddate: date });
+  };
+
   const [formData, setFormData] = useState({
     name: "",
     duration: "01",
@@ -512,9 +525,9 @@ function NewEventSidebar({ overlay, setOverlay }) {
                           type="date"
                           name="startdate"
                           id=""
-                          selected={"06/27/2024"}
                           placeholder="Start Date"
-                          onChange={(date) => setFormData(date)}
+                          selected={startDate}
+                          onChange={(date) => handleStartDateChange(date)}
                         />
                       </div>
                       {error.startdate && (
@@ -535,10 +548,10 @@ function NewEventSidebar({ overlay, setOverlay }) {
                           className="w-full"
                           type="date"
                           name="enddate"
-                          selected={"06/27/2024"}
                           id=""
                           placeholder="End Date"
-                          onChange={(e) => console.log(e.target)}
+                          selected={endDate}
+                          onChange={(date) => handleEndDateChange(date)}
                         />
                       </div>
                       {error.enddate && (
