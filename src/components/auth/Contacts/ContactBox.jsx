@@ -12,14 +12,12 @@ function ContactBox({ box, setRefresh, refresh }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
-  const [boxes, setBoxes] = useState([]);
   const closeModal = () => setModalIsOpen(false);
 
   const handleDelete = (id) => {
     axios
       .delete(`https://localhost:7210/api/Users/${id}`)
       .then((response) => {
-        setBoxes((prevBoxes) => prevBoxes.filter((box) => box.id !== id));
         console.log(`Deleted box with id: ${id}`);
         console.log(response.data, "yes");
         toast.success("User deleted successfully ");

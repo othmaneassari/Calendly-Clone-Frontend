@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import UserProfile from "../auth/User Profile/UserProfile";
 import bell from "../../assets/icon/bell.png";
 import JPM from "../../assets/icon/JPM.png";
 import gear from "../../assets/icon/gear.png";
@@ -46,12 +47,18 @@ function Topbar() {
             </button>
 
             <button className="flex items-center h-12 mr-4">
-              <p className="topbar-btn mr-4">{username}</p>
-              <img
-                className="items-center mr-4 w-13 h-13"
-                src={JPM}
-                alt="profile"
-              />
+              <Link
+                to="/Profile"
+                onClick={() => setPage("profile")}
+                className="profile"
+              >
+                <p className="topbar-btn mr-4">{username}</p>
+                <img
+                  className="items-center mr-4 w-13 h-13"
+                  src={JPM}
+                  alt="profile"
+                />
+              </Link>
             </button>
           </div>
         </ul>

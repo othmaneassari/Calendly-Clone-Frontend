@@ -11,6 +11,7 @@ import AvailableHours from "../../navbars/AvailableHours";
 import ScheduleModify from "../../navbars/ScheduleModify";
 import Contacts from "../Contacts/Contacts";
 import EventTypesList from "../Event Types/EventTypesList";
+import UserProfile from "../User Profile/UserProfile";
 
 const ProtectedRoute = ({ element, isAuthenticated, ...props }) => {
   if (!isAuthenticated) {
@@ -82,6 +83,12 @@ const Test = () => {
             isAuthenticated={!!token}
             element={<EventTypesList />}
           />
+        }
+      />
+      <Route
+        path="/Profile"
+        element={
+          <ProtectedRoute isAuthenticated={!!token} element={<UserProfile />} />
         }
       />
     </Routes>
