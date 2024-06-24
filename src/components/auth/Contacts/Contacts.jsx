@@ -92,7 +92,7 @@ function Contacts() {
             <p className="text-[#919AAB] text-[13px]">Casablanca</p>
           </div>
         </div> */}
-        <div className="flex pt-[10px]">
+        <div className="flex pt-[10px] flex-wrap">
           {filteredBoxes.map((box) => (
             <ContactBox
               key={box.id}
