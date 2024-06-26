@@ -12,6 +12,8 @@ import ScheduleModify from "../../navbars/ScheduleModify";
 import Contacts from "../Contacts/Contacts";
 import EventTypesList from "../Event Types/EventTypesList";
 import UserProfile from "../User Profile/UserProfile";
+import Event from "../Eventss/Event";
+import EventDetails from "../Eventss/EventDetails";
 
 const ProtectedRoute = ({ element, isAuthenticated, ...props }) => {
   if (!isAuthenticated) {
@@ -38,6 +40,8 @@ const Test = () => {
         </div>
       ),
     },
+    { path: "/Event", element: <Event /> },
+    { path: "/EventDetails", element: <EventDetails /> },
     // {
     //   path: "/AvailableHours",
     //   element: (
