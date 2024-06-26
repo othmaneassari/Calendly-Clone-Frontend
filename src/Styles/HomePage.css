@@ -40,6 +40,10 @@ a:hover {
   justify-content: center;
 }
 
+.container-event {
+  display: flex;
+}
+
 .button {
   background-color: #6572e1;
   padding: 10px;
@@ -112,6 +116,18 @@ a:hover {
 
 .btn-google {
   width: 182px;
+  height: 39px;
+  border-radius: 15px;
+
+  margin-top: 10px;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  font-size: 14px;
+  font-family: "poppins", sans-serif;
+}
+
+.btn-google-details {
+  width: 300px;
   height: 39px;
   border-radius: 15px;
 
@@ -322,6 +338,12 @@ a:hover {
   border-radius: 50%;
 }
 
+.custom-cell {
+  height: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #d0d0d0;
+}
+
 .horizontal-line {
   width: 100%;
   border: none;
@@ -333,6 +355,14 @@ a:hover {
   width: 100%;
   border: none;
   border-top: 2px solid #dcdee4;
+}
+
+.horizontal-line-event {
+  width: 90%;
+  border: none;
+  border-top: 2px solid #dcdee4;
+  padding-left: 20px;
+  padding-left: 20px;
 }
 
 /* .custom-underline {
