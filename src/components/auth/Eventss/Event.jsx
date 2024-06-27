@@ -1,5 +1,6 @@
-import React from "react";
-import Calendar from "../../Calendar/Calendar";
+import React, { useState } from "react";
+import EventTime from "./EventTime";
+import EventDetails from "./EventDetails";
 import back from "../../../assets/icon/back.svg";
 import link from "../../../assets/icon/link.svg";
 import user from "../../../assets/icon/user.svg";
@@ -7,10 +8,19 @@ import clocktwo from "../../../assets/icon/clocktwo.svg";
 import telephone from "../../../assets/icon/telephone.svg";
 import down from "../../../assets/icon/down.svg";
 import FullCalendar from "@fullcalendar/react";
-
+import { Calendar } from "@fullcalendar/core/index.js";
+import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
 function Event() {
+  const [eventTime, setEventTime] = useState(false);
+  const [eventDetails, setEventDetails] = useState(false);
+  const [selectHour, setSelectHour] = useState(null);
+
+  const handleDateClick = (info) => {
+    setEventTime((prev) => !prev);
+    console.log(info.dateStr);
+  };
   const events = [
     { title: "", start: new Date() },
     { title: "", date: "2024-04-19" },
@@ -72,13 +82,43 @@ function Event() {
               </div>
             </div>
             <div className="p-10 flex-grow overflow-auto">
-              <FullCalendar
-                events={events}
-                plugins={[dayGridPlugin]}
-                initialView="dayGridMonth"
-                height="auto"
-                contentHeight="auto"
-              />
+              {!eventTime && (
+                <FullCalendar
+                  events={events}
+                  plugins={[dayGridPlugin, interactionPlugin]}
+                  initialView="dayGridMonth"
+                  height="auto"
+                  contentHeight="auto"
+                  dateClick={handleDateClick}
+                />
+              )}
+              {eventTime ? (
+                <EventTime
+                  events={events}
+                  plugins={[dayGridPlugin, interactionPlugin]}
+                  setSelectHour={setSelectHour}
+                  selectHour={selectHour}
+                  dateClick={handleDateClick}
+                />
+              ) : (
+                <></>
+              )}
+              {/* /* <button onClick={() => setEventTime((prev) => !prev)}>
+                {!eventTime ? (
+                  <EventTime
+                    setSelectHour={setSelectHour}
+                    selectHour={selectHour}
+                  />
+                ) : (
+                  <FullCalendar
+                    events={events}
+                    plugins={[dayGridPlugin]}
+                    initialView="dayGridMonth"
+                    height="auto"
+                    contentHeight="auto"
+                  />
+                )}
+              </button> */}
             </div>
           </div>
         </div>
