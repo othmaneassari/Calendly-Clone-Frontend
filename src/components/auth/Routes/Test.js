@@ -14,6 +14,7 @@ import EventTypesList from "../Event Types/EventTypesList";
 import UserProfile from "../User Profile/UserProfile";
 import Event from "../Eventss/Event";
 import EventDetails from "../Eventss/EventDetails";
+import EventTime from "../Eventss/EventTime";
 
 const ProtectedRoute = ({ element, isAuthenticated, ...props }) => {
   if (!isAuthenticated) {
@@ -42,6 +43,8 @@ const Test = () => {
     },
     { path: "/Event", element: <Event /> },
     { path: "/EventDetails", element: <EventDetails /> },
+    { path: "/EventTime", element: <EventTime /> },
+
     // {
     //   path: "/AvailableHours",
     //   element: (
