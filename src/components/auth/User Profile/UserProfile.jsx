@@ -1,12 +1,77 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 import Topbar from "../../navbars/Topbar";
 import Sidebar from "../../navbars/Sidebar";
 import JPM from "../../../assets/icon/JPM.png";
 import { ReactCountryDropdown } from "react-country-dropdown";
 import "react-country-dropdown/dist/index.css";
-function UserProfile() {
+import { useParams } from "react-router-dom";
+function UserProfile(item) {
+  const [newCountry, setNewCountry] = useState("");
+  const { id } = useParams();
+
+  const handleCountryChange = (country) => {
+    setNewCountry(country);
+    setFormData({ ...formData, country: country.name });
+  };
+
+  const [formData, setFormData] = useState({
+    userId: "",
+    name: "",
+    biography: "",
+    language: "",
+    dateformat: "",
+    datetimeformat: "",
+    country: "",
+    timezone: "",
+  });
+
+  const [error, setError] = useState({
+    name: "",
+    duration: "",
+    description: "",
+    location: "",
+    startdate: "",
+    enddate: "",
+  });
+
+  useEffect(() => {
+    axios
+      .get(`https://localhost:7210/api/Users/${id}`)
+      .then((response) => {
+        setFormData({ ...response.data, userId: response.data.id });
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  }, [id]);
+
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  }
+  console.log(formData);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .put("https://localhost:7210/api/Users", formData)
+      .then((response) => {
+        console.log(response);
+        console.log(formData);
+        toast.success(response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error creating event type:", error);
+        toast.error("Failed to update the user's profile. Please try again.");
+      });
+  };
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <Topbar />
       <Sidebar />
       <div className="text-between pt-[100px] ml-[6%] flex">
@@ -38,9 +103,10 @@ function UserProfile() {
               <input
                 className="w-full"
                 type="first name"
-                name=""
+                name="name"
                 id=""
                 placeholder="Name"
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col   my-2 max-sm:mt-0 w-full pt-0">
@@ -48,14 +114,15 @@ function UserProfile() {
                 htmlFor="event name"
                 className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-3"
               >
-                Welcome Message
+                Biography
               </label>
               <div className="flex justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] h-[100px]">
                 <input
                   className="w-full h-full p-0 m-0 align-top text-left"
                   type="text"
-                  name="message"
+                  name="biography"
                   placeholder="Lorem Upsum..."
+                  onChange={handleChange}
                 ></input>
               </div>
             </div>
@@ -71,6 +138,7 @@ function UserProfile() {
                   className="w-full border-0 bg-transparent outline-none"
                   name="language"
                   id=""
+                  onChange={handleChange}
                 >
                   <option value="english">English</option>
                   <option value="french">French</option>
@@ -91,8 +159,9 @@ function UserProfile() {
                 <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] mb-4">
                   <select
                     className="w-full border-0 bg-transparent outline-none"
-                    name="format"
+                    name="dateformat"
                     id=""
+                    onChange={handleChange}
                   >
                     <option value="mm">MM/DD/YYYY</option>
                     <option value="dd">DD/MM/YYYY</option>
@@ -101,7 +170,7 @@ function UserProfile() {
               </div>
               <div className="flex flex-col  my-0 max-sm:mt-0 w-full">
                 <label
-                  htmlFor="time format"
+                  htmlFor="datetimeformat"
                   className="text-[#56647E] text-sm font-medium mb-2 text-[13px] mt-3"
                 >
                   Time Format
@@ -109,8 +178,9 @@ function UserProfile() {
                 <div className="flex items-center justify-between bg-[#F7F7F9] px-5 p-3 rounded-lg border border-[#DFE1E7] mb-4">
                   <select
                     className="w-full border-0 bg-transparent outline-none"
-                    name="timeformat"
+                    name="datetimeformat"
                     id=""
+                    onChange={handleChange}
                   >
                     <option value="12">12h(am-pm)</option>
                     <option value="24">24h</option>
@@ -126,7 +196,11 @@ function UserProfile() {
                 Country
               </label>
               <div>
-                <ReactCountryDropdown />
+                <ReactCountryDropdown
+                  name="country"
+                  selected={newCountry}
+                  onSelect={handleCountryChange}
+                />
               </div>
             </div>
             <div className="flex flex-col  my-0 max-sm:mt-0 w-full">
@@ -141,6 +215,7 @@ function UserProfile() {
                   className="w-full border-0 bg-transparent outline-none"
                   name="timezone"
                   id=""
+                  onChange={handleChange}
                 >
                   <option value="UTC-12:00">UTC-12:00 (Baker Island)</option>
                   <option value="UTC-11:00">UTC-11:00 (American Samoa)</option>
@@ -213,6 +288,7 @@ function UserProfile() {
                   <button
                     type="submit"
                     className="btn-primary border p-4 flex items-center w-full max-sm:mr-0 mb-5 "
+                    onClick={handleSubmit}
                   >
                     Save
                   </button>
@@ -222,7 +298,7 @@ function UserProfile() {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

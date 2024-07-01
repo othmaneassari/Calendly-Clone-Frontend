@@ -264,6 +264,26 @@ a:hover {
   width: 90% !important;
   cursor: pointer !important;
 }
+.event-calendar-large .fc .fc-daygrid-day-frame {
+  background-color: rgba(101, 114, 225, 0.04) !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 79px !important;
+  width: 90% !important;
+  cursor: pointer !important;
+}
+.event-calendar-small .fc .fc-daygrid-day-frame {
+  background-color: rgba(101, 114, 225, 0.04) !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 55px !important;
+  width: 90% !important;
+  cursor: pointer !important;
+}
 .fc-daygrid-day-top a {
   color: #56647e !important;
   font-size: 13px !important;
@@ -358,7 +378,7 @@ a:hover {
 }
 
 .horizontal-line-event {
-  width: 90%;
+  width: 100%;
   border: none;
   border-top: 2px solid #dcdee4;
   padding-left: 20px;
